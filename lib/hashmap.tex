@@ -1,6 +1,7 @@
 % in essence a hash map where the key is also the value
 
 \usepackage{xfp}
+\usepackage{pdftexcmds}
 \usepackage{stringstrings}
 
 \newcommand\modulo[2]{
@@ -16,19 +17,47 @@
     \edef\sum{\fpeval{\strlen * 67 + \wordcnt}}
     \modulo{\sum}{\hashMapSize}
 }
-
 \newcommand\hashMapCreate[1]{
     \arrCreate{#1}
     \arrFill{#1}{\hashMapSize}{}
 }
-
 \newcommand\hashMapAdd[2]{
     \hashString{#2}
-    \arrSetVal{#1}{\moduloRes}{#2}
+    \edef\hashValue{\moduloRes}
+    \setcounter{\arrCnt{#1}}{0}
+    \loop
+    \ifnum \arrCntVal{#1}<\hashMapSize
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1}}}
+        \modulo{\offsetHashValue}{\hashMapSize}
+        \edef\curitem{\arrGetVal{#1}{\moduloRes}}
+        \stringlength[q]{\curitem}
+        \ifnum \theresult>0
+            \stepcounter{\arrCnt{#1}}
+        \else
+            \arrSetVal{#1}{\moduloRes}{#2}
+            \setcounter{\arrCnt{#1}}{\hashMapSize}
+        \fi
+        \repeat
 }
-
-\usepackage{color}
-
+\makeatletter
+\newcommand\hashMapRemove[2]{
+    \hashString{#2}
+    \edef\hashValue{\moduloRes}
+    \setcounter{\arrCnt{#1}}{0}
+    \loop
+    \ifnum \arrCntVal{#1}<\hashMapSize
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1}}}
+        \modulo{\offsetHashValue}{\hashMapSize}
+        \edef\curitem{\arrGetVal{#1}{\moduloRes}}
+        \ifnum\pdf@strcmp{\curitem}{#2}=0
+            \arrSetVal{#1}{\moduloRes}{}
+            \setcounter{\arrCnt{#1}}{\hashMapSize}
+        \else
+            \stepcounter{\arrCnt{#1}}
+        \fi
+        \repeat
+}
+\makeatother
 \newcommand\hashMapPrint[1]{
     \setcounter{\arrCnt{#1}}{0}
     \begin{itemize}
@@ -37,8 +66,8 @@
         \ifnum \arrCntVal{#1}<\hashMapSize
             \edef\curitem{\arrGetVal{#1}{\arrCntVal{#1}}}
             \stringlength[q]{\curitem}
-            \ifnum \theresult>1 % empty strings have a length of 1 in this case, i don't know why
-            \item \arrCntVal{#1}: \curitem
+            \ifnum \theresult>0
+                \item \arrCntVal{#1}: \curitem
             \fi
             \stepcounter{\arrCnt{#1}}
             \repeat
