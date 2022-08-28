@@ -1,0 +1,46 @@
+% in essence a hash map where the key is also the value
+
+\usepackage{xfp}
+\usepackage{stringstrings}
+
+\newcommand\modulo[2]{
+    \edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}
+}
+
+\newcommand\hashMapSize{569}
+\newcommand\hashString[1]{
+    \stringlength[q]{#1}
+    \edef\strlen{\theresult}
+    \wordcount[q]{#1}
+    \edef\wordcnt{\theresult}
+    \edef\sum{\fpeval{\strlen * 67 + \wordcnt}}
+    \modulo{\sum}{\hashMapSize}
+}
+
+\newcommand\hashMapCreate[1]{
+    \arrCreate{#1}
+    \arrFill{#1}{\hashMapSize}{}
+}
+
+\newcommand\hashMapAdd[2]{
+    \hashString{#2}
+    \arrSetVal{#1}{\moduloRes}{#2}
+}
+
+\usepackage{color}
+
+\newcommand\hashMapPrint[1]{
+    \setcounter{\arrCnt{#1}}{0}
+    \begin{itemize}
+        \item Content of #1
+        \loop
+        \ifnum \arrCntVal{#1}<\hashMapSize
+            \edef\curitem{\arrGetVal{#1}{\arrCntVal{#1}}}
+            \stringlength[q]{\curitem}
+            \ifnum \theresult>1 % empty strings have a length of 1 in this case, i don't know why
+            \item \arrCntVal{#1}: \curitem
+            \fi
+            \stepcounter{\arrCnt{#1}}
+            \repeat
+    \end{itemize}
+}
