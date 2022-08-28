@@ -1,0 +1,42 @@
+\chapter{Arrays}
+
+\section{Declaration}
+\newcounter{mycounter}
+\setcounter{mycounter}{1}
+\expandafter\newcommand\csname myarr\the\value{mycounter} \endcsname{myfirstelement}
+\stepcounter{mycounter}
+\expandafter\newcommand\csname myarr\the\value{mycounter} \endcsname{mysecondelement}
+
+\section{Access hardcoded}
+\csname myarr1 \endcsname
+
+\section{Access using variable}
+\newcounter{index}
+\setcounter{index}{2}
+\csname myarr\the\value{index} \endcsname
+
+\section{Stack}
+
+\arrCreate{stack}
+\arrPushVal{stack}{first item}
+\arrPushVal{stack}{second item}
+\arrPushVal{stack}{third item}
+
+\subsection{Looping over it}
+\arrPrint{stack}
+
+\subsection{Pushing and popping}
+\arrPopVal{stack}
+
+\arrPopVal{stack}
+
+\arrPushVal{stack}{fourth item}
+\arrPushVal{stack}{fith item}
+
+\arrPopVal{stack}
+
+\arrPopVal{stack}
+
+\subsection{Looping over it (again)}
+\arrPrint{stack}
+
