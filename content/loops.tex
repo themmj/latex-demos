@@ -1,0 +1,22 @@
+\chapter{Loops}
+
+\section{List based loops}
+\makeatletter
+\@for\sun:={rising,shining,setting}\do{The sun is \sun.}
+\makeatother
+
+\section{Range based loops}
+\makeatletter
+\newcounter{int}
+\@whilenum\value{int}<5\do
+{\stepcounter{int}\ifthenelse{\isodd{\value{int}}}{\theint}{}}
+\makeatother
+
+\section{Loops using repeat}
+\setcounter{int}{1}
+\loop
+\theint
+\addtocounter{int}{2}
+\ifnum \value{int}<10
+    \repeat
+
