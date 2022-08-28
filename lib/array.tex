@@ -23,9 +23,7 @@
     \expandafter\providecommand\csname #1#2 \endcsname{} % hot fix to avoid error on next line as the command may not have been defined yet
     \expandafter\renewcommand\csname #1#2 \endcsname{#3}
 }
-\newcommand\arrGetVal[2]{
-    \csname #1#2 \endcsname
-}
+\newcommand\arrGetVal[2]{\csname #1#2 \endcsname}
 \newcommand\arrPrint[1]{
     \setcounter{\arrCnt{#1}}{0}
     \begin{itemize}
