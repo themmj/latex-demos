@@ -4,6 +4,8 @@
 \usepackage{pdftexcmds}
 \usepackage{stringstrings}
 
+\input{lib/array.tex}
+
 \newcommand\modulo[2]{
     \edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}
 }
@@ -19,9 +21,13 @@
 }
 \newcommand\hashMapCreate[1]{
     \arrCreate{#1}
+    \arrCreate{#1values}
     \arrFill{#1}{\hashMapSize}{}
 }
-\newcommand\hashMapAdd[2]{
+\newcommand\hashMapClear[1]{
+    \arrFill{#1}{\hashMapSize}{}
+}
+\newcommand\hashMapAdd[3]{
     \hashString{#2}
     \edef\hashValue{\moduloRes}
     \setcounter{\arrCnt{#1}}{0}
@@ -35,6 +41,7 @@
             \stepcounter{\arrCnt{#1}}
         \else
             \arrSetVal{#1}{\moduloRes}{#2}
+            \arrSetVal{#1values}{\moduloRes}{#3}
             \setcounter{\arrCnt{#1}}{\hashMapSize}
         \fi
         \repeat
@@ -51,6 +58,23 @@
         \edef\curitem{\arrGetVal{#1}{\moduloRes}}
         \ifnum\pdf@strcmp{\curitem}{#2}=0
             \arrSetVal{#1}{\moduloRes}{}
+            \setcounter{\arrCnt{#1}}{\hashMapSize}
+        \else
+            \stepcounter{\arrCnt{#1}}
+        \fi
+        \repeat
+}
+\newcommand\hashMapGet[2]{
+    \hashString{#2}
+    \edef\hashValue{\moduloRes}
+    \setcounter{\arrCnt{#1}}{0}
+    \loop
+    \ifnum \arrCntVal{#1}<\hashMapSize
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1}}}
+        \modulo{\offsetHashValue}{\hashMapSize}
+        \edef\curitem{\arrGetVal{#1}{\moduloRes}}
+        \ifnum\pdf@strcmp{\curitem}{#2}=0
+            \arrGetVal{#1values}{\moduloRes}
             \setcounter{\arrCnt{#1}}{\hashMapSize}
         \else
             \stepcounter{\arrCnt{#1}}

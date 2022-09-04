@@ -2,21 +2,22 @@
 
 \section{Simple test}
 \hashMapCreate{newmap}
-\hashMapAdd{newmap}{first test string}
-\hashMapAdd{newmap}{second test string}
+\hashMapAdd{newmap}{first test string}{first test string}
+\hashMapAdd{newmap}{second test string}{second test string}
 \hashMapPrint{newmap}
 
 \section{Collision}
 \hashMapCreate{collisionmap}
-\hashMapAdd{collisionmap}{one}
-\hashMapAdd{collisionmap}{two}
-\hashMapAdd{collisionmap}{three}
-\hashMapAdd{collisionmap}{four}
-\hashMapAdd{collisionmap}{new}
+\hashMapAdd{collisionmap}{one}{one}
+\hashMapAdd{collisionmap}{two}{two}
+\hashMapAdd{collisionmap}{three}{three}
+\hashMapAdd{collisionmap}{four}{four}
+\hashMapAdd{collisionmap}{new}{new}
 \hashMapPrint{collisionmap}
 
 \hashMapRemove{collisionmap}{two}
 \hashMapRemove{collisionmap}{new}
-\hashMapAdd{collisionmap}{new}
+\hashMapAdd{collisionmap}{new}{new value}
 \hashMapPrint{collisionmap}
 
+\hashMapGet{collisionmap}{new}
