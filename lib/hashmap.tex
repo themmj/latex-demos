@@ -11,6 +11,7 @@
 }
 
 \newcommand\hashMapSize{569}
+\newcommand\hashMapValue{}
 \newcommand\hashString[1]{
     \stringlength[q]{#1keys}
     \edef\strlen{\theresult}
@@ -74,7 +75,7 @@
         \modulo{\offsetHashValue}{\hashMapSize}
         \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}
         \ifnum\pdf@strcmp{\curitem}{#2}=0
-            \arrGetVal{#1values}{\moduloRes}
+            \renewcommand\hashMapValue{\arrGetVal{#1values}{\moduloRes}}
             \setcounter{\arrCnt{#1keys}}{\hashMapSize}
         \else
             \stepcounter{\arrCnt{#1keys}}
@@ -85,13 +86,13 @@
 \newcommand\hashMapPrint[1]{
     \setcounter{\arrCnt{#1keys}}{0}
     \begin{itemize}
-        \item Content of #1
+        \item \textbf{Content of #1}
         \loop
         \ifnum \arrCntVal{#1keys}<\hashMapSize
             \edef\curitem{\arrGetVal{#1keys}{\arrCntVal{#1keys}}}
             \stringlength[q]{\curitem}
             \ifnum \theresult>0
-                \item \arrCntVal{#1keys}: \curitem
+                \item \curitem
             \fi
             \stepcounter{\arrCnt{#1keys}}
             \repeat

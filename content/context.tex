@@ -1,0 +1,34 @@
+\chapter{Context}
+
+\contextCreate{Formulas}
+\contextCreate{Alice}
+
+\contextPrint{Formulas}
+
+\contextPrint{Alice}
+
+\section{Formula}
+
+This section introduces the pythagorean theorem.
+\contextAdd{Formulas}{pythagorean theorem}
+
+\contextPrint{Formulas}
+
+\section{Hutmacher}
+
+Alice received a beautiful hat from the Hutmacher.
+\contextAdd{Alice}{beautiful hat}
+
+\contextPrint{Alice}
+
+\section{Big Bad Bear}
+
+Unfortunately the big bad bear stole Alice's beautiful hat.
+\contextRemove{Alice}{beautiful hat}
+\contextAdd{Alice}{does not like the bear}
+
+\contextPrint{Alice}
+
+\section{What happened so far}
+
+\contextPrintAll
