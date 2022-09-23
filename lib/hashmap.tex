@@ -86,7 +86,7 @@
 \newcommand\hashMapPrint[1]{
     \setcounter{\arrCnt{#1keys}}{0}
     \begin{itemize}
-        \item \textbf{Content of #1}
+        \item[] \textbf{Content of #1} % Necessary because an empty itemize environment (empty map) is not allowed
         \loop
         \ifnum \arrCntVal{#1keys}<\hashMapSize
             \edef\curitem{\arrGetVal{#1keys}{\arrCntVal{#1keys}}}
