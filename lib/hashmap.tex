@@ -66,6 +66,7 @@
         \repeat
 }
 \newcommand\hashMapGet[2]{
+    \renewcommand\hashMapValue{}
     \hashString{#2}
     \edef\hashValue{\moduloRes}
     \setcounter{\arrCnt{#1keys}}{0}

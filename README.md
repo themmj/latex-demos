@@ -42,10 +42,13 @@ The goal is to ease restructuring of already witten content, going back and addi
 or just simply coming back to an ongoing work after a long time.
 
 First each relevant context needs to be created (preferably in the praeamble) with `\contextCreate{<name>}`. Note that
-the name of a context has to be a single word.
+the name of a context has to be a single word (no spaces).
 
 Then you can add and remove items from a context in your text with
 `\contextAdd{<name>}{<info to add>}` and `\contextRemove{<name>}{<info to remove>}`.
+
+Then you can assert preconditions for an upcoming block of text with 
+`\contextRequire{<name>}{<info which must be in the context at that point>}`.
 
 Finally you can print an individual context `\contextPrint{<name>}` or all contexts `\contextPrintAll` at any point
 in your text to find out what is currently established/known/...

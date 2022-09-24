@@ -23,11 +23,23 @@ Alice received a beautiful hat from the Hutmacher.
 
 \section{Big Bad Bear}
 
+\contextRequire{Alice}{beautiful hat}
 Unfortunately the big bad bear stole Alice's beautiful hat.
 \contextRemove{Alice}{beautiful hat}
 \contextAdd{Alice}{does not like the bear}
 
 \contextPrint{Alice}
+
+% The following section would cause a compilation error because it requires Alice to have her hat,
+% which she lost in the previous section.
+% \section{Big Bad Bear - the sequel}
+%
+% \contextRequire{Alice}{beautiful hat}
+% Unfortunately the big bad bear's brother stole Alice's beautiful hat.
+% \contextRemove{Alice}{beautiful hat}
+% \contextAdd{Alice}{does not like the bear's brother}
+%
+% \contextPrint{Alice}
 
 \section{What happened so far}
 

@@ -11,6 +11,13 @@
 \newcommand\contextRemove[2]{\hashMapRemove{#1}{#2}}
 \newcommand\contextClear[1]{\hashMapClear{#1}}
 \newcommand\contextPrint[1]{\hashMapPrint{#1}}
+\newcommand\contextRequire[2]{
+    \hashMapGet{#1}{#2}
+    \stringlength[q]{\hashMapValue}
+    \ifnum \theresult=0
+        \PackageError{Context}{Context entry "#2" in "#1" required but not found!}
+    \fi
+}
 
 \newcommand\contextPrintAll{
     \setcounter{\arrCnt{contextcategorieskeys}}{0}
