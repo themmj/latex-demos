@@ -7,17 +7,18 @@
 \input{lib/array.tex}
 
 \newcommand\modulo[2]{%
-\edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}%
+    \edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}%
 }
 
 \newcommand\hashMapSize{569}
 \newcommand\hashMapValue{}
 \newcommand\hashString[1]{%
-    \stringlength[q]{#1keys}%
+    \stringlength[q]{#1}%
     \edef\strlen{\theresult}%
-    \wordcount[q]{#1keys}%
-    \edef\wordcnt{\theresult}%
-    \edef\sum{\fpeval{\strlen * 67 + \wordcnt}}%
+    \noblanks[q]{#1}%
+    \stringlength[q]{\thestring}%
+    \edef\wordcnt{\theresult}% not actually word count, but is used to calculate it down below (reason: \wordcount generates a lot of whitespace, even in quiet mode)
+    \edef\sum{\fpeval{\strlen * 67 + \strlen - \wordcnt + 1}}%
     \modulo{\sum}{\hashMapSize}%
 }
 \newcommand\hashMapCreate[1]{%
