@@ -4,44 +4,44 @@
 \newcommand\arrCntVal[1]{\the\value{\arrCnt{#1}}}
 \newcommand\arrEnd[1]{end#1}
 \newcommand\arrEndVal[1]{\the\value{\arrEnd{#1}}}
-\newcommand\arrCreate[1]{
-    \newcounter{\arrEnd{#1}}
-    \newcounter{\arrCnt{#1}}
+\newcommand\arrCreate[1]{%
+    \newcounter{\arrEnd{#1}}%
+    \newcounter{\arrCnt{#1}}%
 }
-\newcommand\arrClear[1]{
-    \setcounter{\arrEnd{#1}}{0}
+\newcommand\arrClear[1]{%
+    \setcounter{\arrEnd{#1}}{0}%
 }
-\newcommand\arrPushVal[2]{
-    \arrSetVal{#1}{\arrEndVal{#1}}{#2}
-    \addtocounter{\arrEnd{#1}}{1}
+\newcommand\arrPushVal[2]{%
+    \arrSetVal{#1}{\arrEndVal{#1}}{#2}%
+    \addtocounter{\arrEnd{#1}}{1}%
 }
-\newcommand\arrPopVal[1]{
-    \addtocounter{\arrEnd{#1}}{-1}
-    \arrGetVal{#1}{\arrEndVal{#1}}
+\newcommand\arrPopVal[1]{%
+    \addtocounter{\arrEnd{#1}}{-1}%
+    \arrGetVal{#1}{\arrEndVal{#1}}%
 }
-\newcommand\arrSetVal[3]{
-    \expandafter\providecommand\csname #1#2 \endcsname{} % hot fix to avoid error on next line as the command may not have been defined yet
-    \expandafter\renewcommand\csname #1#2 \endcsname{#3}
+\newcommand\arrSetVal[3]{%
+    \expandafter\providecommand\csname #1#2 \endcsname{}% hot fix to avoid error on next line as the command may not have been defined yet
+    \expandafter\renewcommand\csname #1#2 \endcsname{#3}%
 }
 \newcommand\arrGetVal[2]{\csname #1#2 \endcsname}
-\newcommand\arrPrint[1]{
-    \setcounter{\arrCnt{#1}}{0}
-    \begin{itemize}
-    \loop
-    \ifnum \arrCntVal{#1}<\arrEndVal{stack}
-        \item \arrGetVal{#1}{\arrCntVal{#1}}
-        \stepcounter{\arrCnt{#1}}
-        \repeat
-    \end{itemize}
+\newcommand\arrPrint[1]{%
+    \setcounter{\arrCnt{#1}}{0}%
+    \begin{itemize}%
+    \loop%
+    \ifnum \arrCntVal{#1}<\arrEndVal{stack}%
+        \item \arrGetVal{#1}{\arrCntVal{#1}}%
+        \stepcounter{\arrCnt{#1}}%
+        \repeat%
+    \end{itemize}%
 }
 
-\newcommand\arrFill[3]{
-    \setcounter{\arrEnd{#1}}{#2}
-    \setcounter{\arrCnt{#1}}{0}
-    \loop
-    \ifnum \arrCntVal{#1}<\arrEndVal{#1}
-        \arrSetVal{#1}{\arrCntVal{#1}}{#3}
-        \stepcounter{\arrCnt{#1}}
-        \repeat
+\newcommand\arrFill[3]{%
+    \setcounter{\arrEnd{#1}}{#2}%
+    \setcounter{\arrCnt{#1}}{0}%
+    \loop%
+    \ifnum\arrCntVal{#1}<\arrEndVal{#1}%
+        \arrSetVal{#1}{\arrCntVal{#1}}{#3}%
+        \stepcounter{\arrCnt{#1}}%
+        \repeat%
 }
 

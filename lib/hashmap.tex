@@ -6,96 +6,96 @@
 
 \input{lib/array.tex}
 
-\newcommand\modulo[2]{
-    \edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}
+\newcommand\modulo[2]{%
+\edef\moduloRes{\fpeval{#1 - (floor(#1 / #2) * #2)}}%
 }
 
 \newcommand\hashMapSize{569}
 \newcommand\hashMapValue{}
-\newcommand\hashString[1]{
-    \stringlength[q]{#1keys}
-    \edef\strlen{\theresult}
-    \wordcount[q]{#1keys}
-    \edef\wordcnt{\theresult}
-    \edef\sum{\fpeval{\strlen * 67 + \wordcnt}}
-    \modulo{\sum}{\hashMapSize}
+\newcommand\hashString[1]{%
+    \stringlength[q]{#1keys}%
+    \edef\strlen{\theresult}%
+    \wordcount[q]{#1keys}%
+    \edef\wordcnt{\theresult}%
+    \edef\sum{\fpeval{\strlen * 67 + \wordcnt}}%
+    \modulo{\sum}{\hashMapSize}%
 }
-\newcommand\hashMapCreate[1]{
-    \arrCreate{#1keys}
-    \arrCreate{#1values}
-    \arrFill{#1keys}{\hashMapSize}{}
+\newcommand\hashMapCreate[1]{%
+    \arrCreate{#1keys}%
+    \arrCreate{#1values}%
+    \arrFill{#1keys}{\hashMapSize}{}%
 }
-\newcommand\hashMapClear[1]{
-    \arrFill{#1keys}{\hashMapSize}{}
+\newcommand\hashMapClear[1]{%
+    \arrFill{#1keys}{\hashMapSize}{}%
 }
-\newcommand\hashMapAdd[3]{
-    \hashString{#2}
-    \edef\hashValue{\moduloRes}
-    \setcounter{\arrCnt{#1keys}}{0}
-    \loop
-    \ifnum \arrCntVal{#1keys}<\hashMapSize
-        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}
-        \modulo{\offsetHashValue}{\hashMapSize}
-        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}
-        \stringlength[q]{\curitem}
-        \ifnum \theresult>0
-            \stepcounter{\arrCnt{#1keys}}
-        \else
-            \arrSetVal{#1keys}{\moduloRes}{#2}
-            \arrSetVal{#1values}{\moduloRes}{#3}
-            \setcounter{\arrCnt{#1keys}}{\hashMapSize}
-        \fi
-        \repeat
+\newcommand\hashMapAdd[3]{%
+    \hashString{#2}%
+    \edef\hashValue{\moduloRes}%
+    \setcounter{\arrCnt{#1keys}}{0}%
+    \loop%
+    \ifnum\arrCntVal{#1keys}<\hashMapSize%
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}%
+        \modulo{\offsetHashValue}{\hashMapSize}%
+        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}%
+        \stringlength[q]{\curitem}%
+        \ifnum\theresult>0%
+            \stepcounter{\arrCnt{#1keys}}%
+        \else%
+            \arrSetVal{#1keys}{\moduloRes}{#2}%
+            \arrSetVal{#1values}{\moduloRes}{#3}%
+            \setcounter{\arrCnt{#1keys}}{\hashMapSize}%
+        \fi%
+        \repeat%
 }
 \makeatletter
-\newcommand\hashMapRemove[2]{
-    \hashString{#2}
-    \edef\hashValue{\moduloRes}
-    \setcounter{\arrCnt{#1keys}}{0}
-    \loop
-    \ifnum \arrCntVal{#1keys}<\hashMapSize
-        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}
-        \modulo{\offsetHashValue}{\hashMapSize}
-        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}
-        \ifnum\pdf@strcmp{\curitem}{#2}=0
-            \arrSetVal{#1keys}{\moduloRes}{}
-            \setcounter{\arrCnt{#1keys}}{\hashMapSize}
-        \else
-            \stepcounter{\arrCnt{#1keys}}
-        \fi
-        \repeat
+\newcommand\hashMapRemove[2]{%
+    \hashString{#2}%
+    \edef\hashValue{\moduloRes}%
+    \setcounter{\arrCnt{#1keys}}{0}%
+    \loop%
+    \ifnum\arrCntVal{#1keys}<\hashMapSize%
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}%
+        \modulo{\offsetHashValue}{\hashMapSize}%
+        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}%
+        \ifnum\pdf@strcmp{\curitem}{#2}=0%
+            \arrSetVal{#1keys}{\moduloRes}{}%
+            \setcounter{\arrCnt{#1keys}}{\hashMapSize}%
+        \else%
+            \stepcounter{\arrCnt{#1keys}}%
+        \fi%
+        \repeat%
 }
-\newcommand\hashMapGet[2]{
-    \renewcommand\hashMapValue{}
-    \hashString{#2}
-    \edef\hashValue{\moduloRes}
-    \setcounter{\arrCnt{#1keys}}{0}
-    \loop
-    \ifnum \arrCntVal{#1keys}<\hashMapSize
-        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}
-        \modulo{\offsetHashValue}{\hashMapSize}
-        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}
-        \ifnum\pdf@strcmp{\curitem}{#2}=0
-            \renewcommand\hashMapValue{\arrGetVal{#1values}{\moduloRes}}
-            \setcounter{\arrCnt{#1keys}}{\hashMapSize}
-        \else
-            \stepcounter{\arrCnt{#1keys}}
-        \fi
-        \repeat
+\newcommand\hashMapGet[2]{%
+    \renewcommand\hashMapValue{}%
+    \hashString{#2}%
+    \edef\hashValue{\moduloRes}%
+    \setcounter{\arrCnt{#1keys}}{0}%
+    \loop%
+    \ifnum \arrCntVal{#1keys}<\hashMapSize%
+        \edef\offsetHashValue{\fpeval{\hashValue + \arrCntVal{#1keys}}}%
+        \modulo{\offsetHashValue}{\hashMapSize}%
+        \edef\curitem{\arrGetVal{#1keys}{\moduloRes}}%
+        \ifnum\pdf@strcmp{\curitem}{#2}=0%
+            \renewcommand\hashMapValue{\arrGetVal{#1values}{\moduloRes}}%
+            \setcounter{\arrCnt{#1keys}}{\hashMapSize}%
+        \else%
+            \stepcounter{\arrCnt{#1keys}}%
+        \fi%
+        \repeat%
 }
 \makeatother
-\newcommand\hashMapPrint[1]{
-    \setcounter{\arrCnt{#1keys}}{0}
-    \begin{itemize}
-        \item[] \textbf{Content of #1} % Necessary because an empty itemize environment (empty map) is not allowed
-        \loop
-        \ifnum \arrCntVal{#1keys}<\hashMapSize
-            \edef\curitem{\arrGetVal{#1keys}{\arrCntVal{#1keys}}}
-            \stringlength[q]{\curitem}
-            \ifnum \theresult>0
-                \item \curitem
-            \fi
-            \stepcounter{\arrCnt{#1keys}}
-            \repeat
-    \end{itemize}
+\newcommand\hashMapPrint[1]{%
+    \setcounter{\arrCnt{#1keys}}{0}%
+    \begin{itemize}%
+        \item[] \textbf{Content of #1}% Necessary because an empty itemize environment (empty map) is not allowed
+        \loop%
+        \ifnum \arrCntVal{#1keys}<\hashMapSize%
+            \edef\curitem{\arrGetVal{#1keys}{\arrCntVal{#1keys}}}%
+            \stringlength[q]{\curitem}%
+            \ifnum \theresult>0%
+                \item \curitem%
+            \fi%
+            \stepcounter{\arrCnt{#1keys}}%
+            \repeat%
+    \end{itemize}%
 }

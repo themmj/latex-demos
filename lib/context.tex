@@ -2,33 +2,33 @@
 
 \hashMapCreate{contextcategories}
 
-\newcommand\contextCreate[1]{
-    \hashMapAdd{contextcategories}{#1}{#1}
-    \hashMapCreate{#1}
+\newcommand\contextCreate[1]{%
+    \hashMapAdd{contextcategories}{#1}{#1}%
+    \hashMapCreate{#1}%
 }
 
 \newcommand\contextAdd[2]{\hashMapAdd{#1}{#2}{#2}}
 \newcommand\contextRemove[2]{\hashMapRemove{#1}{#2}}
 \newcommand\contextClear[1]{\hashMapClear{#1}}
 \newcommand\contextPrint[1]{\hashMapPrint{#1}}
-\newcommand\contextRequire[2]{
-    \hashMapGet{#1}{#2}
-    \stringlength[q]{\hashMapValue}
-    \ifnum \theresult=0
-        \PackageError{Context}{Context entry "#2" in "#1" required but not found!}
-    \fi
+\newcommand\contextRequire[2]{%
+    \hashMapGet{#1}{#2}%
+    \stringlength[q]{\hashMapValue}%
+    \ifnum\theresult=0
+        \PackageError{Context}{Context entry "#2" in "#1" required but not found!}%
+    \fi%
 }
 
-\newcommand\contextPrintAll{
-    \setcounter{\arrCnt{contextcategorieskeys}}{0}
-    \loop
-    \ifnum \arrCntVal{contextcategorieskeys}<\hashMapSize
-        \edef\curcategory{\arrGetVal{contextcategorieskeys}{\arrCntVal{contextcategorieskeys}}}
-        \stringlength[q]{\curcategory}
-        \ifnum \theresult>0
-            \contextPrint{\curcategory}
-        \fi
-        \stepcounter{\arrCnt{contextcategorieskeys}}
-        \repeat
+\newcommand\contextPrintAll{%
+    \setcounter{\arrCnt{contextcategorieskeys}}{0}%
+    \loop%
+    \ifnum\arrCntVal{contextcategorieskeys}<\hashMapSize%
+        \edef\curcategory{\arrGetVal{contextcategorieskeys}{\arrCntVal{contextcategorieskeys}}}%
+        \stringlength[q]{\curcategory}%
+        \ifnum \theresult>0%
+            \contextPrint{\curcategory}%
+        \fi%
+        \stepcounter{\arrCnt{contextcategorieskeys}}%
+        \repeat%
 }
 
