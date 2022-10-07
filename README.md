@@ -3,7 +3,7 @@
 A small collection of fun demos with latex. It is probably breaking a plethora of latex conventions, so feedback is
 always welcome.
 
-Latex's token evaluation is something I'm still readin up on [here](https://www.overleaf.com/learn/latex/Articles/How_does_%5Cexpandafter_work%3A_An_introduction_to_TeX_tokens).
+Latex's token evaluation is something I'm still reading up on [here](https://www.overleaf.com/learn/latex/Articles/How_does_%5Cexpandafter_work%3A_An_introduction_to_TeX_tokens).
 Once I am more comfortable with it, I'll probably refactor a lot of the code in this project.
 
 1. [Loops](#loops)
@@ -18,19 +18,19 @@ combination with conditional statements makes implementing algorithms fairly str
 
 ## Arrays
 
-By defining commands in the format <arrayname><index> which contain the value to be stored at this index,
+By defining commands in the format `<arrayname><index>` which contain the value to be stored at this index,
 it is possible to model arrays. Combine this with a size counter and you got a stack.
 
 ## HashMaps
 
 Combining two arrays and a basic string hashing function, one can build something which at least somewhat resembles
-a hash map. It does not have buckets or any other clever logic. The hashing function uses the strings length and word
-count to calculate a somewhat random value. The underlying array has a set size `\hashMapSize`. Finally, the collision
+a hash map. It does not have buckets or any other clever logic. The hashing function uses the strings length and a scuffed
+word count to calculate a somewhat random value. The underlying array has a set size `\hashMapSize`. Finally, the collision
 strategy is just looking for the next free slot.
 
 ## Context
 
-This is the reason I even bothered with the above topics. Basically, I think it would be handy so store meta information
+This is the reason I even bothered with the above topics. Basically, I thought it would be handy so store meta information
 along with the written text which can be edited and retrieved at any time.
 
 Example usages:  
